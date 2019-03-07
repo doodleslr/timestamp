@@ -1,41 +1,21 @@
-const http = require('http');
-const fs = require('fs');
+const path = require('path');
+const express = require('express');
+const app = express();
 
-const getTimeStamp = date =>({
-    unix: date.getTime(),
-    utc: date.toUTCString()
-});
-
-const requestHandler = (req, res)=>{
-    if(req.url === '/'){
-        fs.readFile('views/index.html', 'utf8', (err, html)=>{
-            if(err){
-                throw err;
-            }
-            res.writeHead(200, {'Content-type': 'text/html'});
-            res.end(html);
-        });
+app.use(['/', '/api/timestamp'], (req, res) => {
+    if (req.url === '/') {
+        res.sendFile(path.join(__dirname, 'views', 'index.html'));
     } else if (req.url.startsWith('/api/timestamp')){
         const dateString = req.url.split('/api/timestamp/')[1];
-        // creates dateString array with [0] being removed url and [1] being remainder of url
-        // be that empty and undefined, or the date provided in the req
-        let date;
+        var userDate;
 
-        if(dateString === undefined || dateString.trim() === '') {
-            date = JSON.stringify(getTimeStamp(new Date()));
+        if(dateString === undefined || dateString.trim() == '') {
+            userDate = new Date();
         } else {
-            date = new Date(dateString);
+            userDate = new Date(dateString);
         }
-        // res.writeHead(200, {'Content-type': 'application/json'});
-        res.end('The date is:\n' + date);
-    }
-};
-
-// res.end(date + '\n' + JSON.stringify(timeStamp));
-const server = http.createServer(requestHandler);
-server.listen(process.env.PORT || 4100, err => {
-    if(err) {
-        throw err;
-    }
-    console.log(`Server running on PORT ${server.address().port}`);
+        res.send('The date requested is:\n' + userDate);
+    } 
 });
+
+app.listen(4100);

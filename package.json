@@ -16,5 +16,9 @@
     "url": "https://github.com/doodleslr/timestamp/issues"
   },
   "homepage": "https://github.com/doodleslr/timestamp#readme",
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {},
+  "keywords": []
 }
