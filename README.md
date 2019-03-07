@@ -1,3 +1,5 @@
 # timestamp
 practice tutorial timestamp service in nodejs
-To be revised in Express
+Two versions of Index.js
+Vanilla.js is the tutorial version
+Index.js is the solo version, condensed with Express
